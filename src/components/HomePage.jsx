@@ -25,8 +25,8 @@ return(
                             rounded-2xl sm:rounded-3xl cursor-pointer duration-200
                             hover:bg-white hover:text-black hover:scale-105 transition-all
                             max-w-xs sm:max-w-sm md:max-w-md mx-auto
-                            shadow-lg hover:shadow-xl
-            " onClick={() => navigate('/products')}>
+                            shadow-lg hover:shadow-xl"
+            onClick={() => navigate('/products')}>
                 ORDER NOW
             </div>
         </div>
@@ -64,7 +64,7 @@ return(
                             
                             <div className="bg-green-100 border-l-4 border-green-600 p-4 sm:p-6 rounded-lg">
                                 <p className="text-lg sm:text-xl font-semibold text-green-800 italic">
-                                    "Sarap na hanap hanap hanggang sa huling slice"
+                                    "Sarap na hanap - hanap hanggang sa huling slice"
                                 </p>
                             </div>
                         </div>
