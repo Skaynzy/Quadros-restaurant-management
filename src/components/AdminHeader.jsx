@@ -56,7 +56,7 @@ const AdminHeader = () => {
           </div>
 
           {/* Sign out btn */}
-          <button>Sign-Out</button>
+          <button>Log-Out</button>
           {/* Hamburger Menu Button */}
 
           <button

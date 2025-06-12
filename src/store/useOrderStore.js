@@ -19,7 +19,11 @@ const useOrderStore = create(
                   ...order,
                   orderStatus: newStatus,
                   timeElapsed:
-                    newStatus === "preparing" ? 0 : order.timeElapsed,
+                    newStatus === "preparing" || newStatus === "on_the_way"
+                      ? 0
+                      : order.timeElapsed,
+                  // Add timestamp for tracking when status changed
+                  statusUpdatedAt: new Date().toISOString(),
                 }
               : order
           ),
@@ -32,6 +36,18 @@ const useOrderStore = create(
 
       getOrdersByStatus: (status) => (state) =>
         state.orders.filter((order) => order.orderStatus === status),
+
+      // Helper function to get orders for rider workflow
+      getRiderOrders: () => (state) =>
+        state.orders.filter((order) =>
+          ["ready", "on_the_way", "delivered"].includes(order.orderStatus)
+        ),
+
+      // Helper function to get orders for kitchen workflow
+      getKitchenOrders: () => (state) =>
+        state.orders.filter((order) =>
+          ["pending", "preparing", "ready"].includes(order.orderStatus)
+        ),
     }),
     {
       name: "orders-store",

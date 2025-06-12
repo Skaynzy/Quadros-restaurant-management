@@ -8,7 +8,7 @@ const useAuthStore = create(
         name: "Lhenard Kaiser",
         email: "lhenardkaiser00@gmail.com",
       },
-      isAuthenticated: false,
+      isAuthenticated: true,
       userRole: "user",
 
       login: (role) => set({ isAuthenticated: true, userRole: role }),

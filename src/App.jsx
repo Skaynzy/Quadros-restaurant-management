@@ -16,7 +16,7 @@ import Contacts from "./pages/Contacts";
 import AdminPanel from "./components/AdminPanel";
 import HomePage from "./components/HomePage";
 import ManageProductsPage from "./pages/ManageProductsPage";
-
+import RiderPage from "./pages/RiderPage";
 
 const App = () => {
   return (
@@ -45,7 +45,7 @@ const App = () => {
           </Route>
         {/* staff routes*/}
           <Route path="staff/order-management" element={<StaffUIPage />} />
-        
+          <Route path="rider/order-management" element={<RiderPage/>}/>
         {/* login route*/}
         
           <Route path="login" element={<LoginPage />} />

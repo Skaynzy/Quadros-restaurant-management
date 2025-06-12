@@ -172,7 +172,19 @@ const ManageAccountPage = () => {
   };
 
   const handleSubmit = () => {
-    if (modalType === "create") {
+  // Validation for create and edit modes
+  if (modalType !== "delete") {
+    if (!formData.name.trim() || !formData.email.trim() || !formData.phone.trim()) {
+      alert("Please fill in all required fields");
+      return;
+    }
+    if (modalType === "create" && !formData.password.trim()) {
+      alert("Password is required for new accounts");
+      return;
+    }
+  }
+
+  if (modalType === "create") {
       const newAccount = {
         id: accounts.length + 1,
         ...formData,
@@ -181,9 +193,14 @@ const ManageAccountPage = () => {
       };
       setAccounts([...accounts, newAccount]);
     } else if (modalType === "edit") {
+      const updatedData = { ...formData };
+      // Only update password if a new one was provided
+      if (!formData.password.trim()) {
+        delete updatedData.password;
+      }
       setAccounts(
         accounts.map((acc) =>
-          acc.id === selectedAccount.id ? { ...acc, ...formData } : acc
+          acc.id === selectedAccount.id ? { ...acc, ...updatedData } : acc
         )
       );
     } else if (modalType === "delete") {
@@ -510,10 +527,10 @@ const ManageAccountPage = () => {
                         <option value="admin">Admin</option>
                       </select>
                     </div>
-                    {modalType === "create" && (
+                    {(modalType === "create" || modalType === "edit") && (
                       <div>
                         <label className="block text-green-300 text-sm font-medium mb-2">
-                          Password
+                          {modalType === "edit" ? "New Password (leave blank to keep current)" : "Password"}
                         </label>
                         <input
                           type="password"
@@ -525,7 +542,7 @@ const ManageAccountPage = () => {
                             })
                           }
                           className="w-full px-3 py-2 bg-green-800/50 border border-green-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-green-500"
-                          required
+                          required={modalType === "create"}
                         />
                       </div>
                     )}
