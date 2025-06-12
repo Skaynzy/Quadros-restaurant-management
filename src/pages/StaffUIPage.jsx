@@ -1,5 +1,8 @@
+import useAuthStore from "../store/useAuthStore";
+import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import useOrderStore from "../store/useOrderStore";
+
 import {
   Clock,
   User,
@@ -9,9 +12,23 @@ import {
   Play,
   CheckCircle,
   Truck,
+  LogOut
 } from "lucide-react";
 
 const StaffUIPage = () => {
+  
+  const navigate = useNavigate();
+  const { logout, isAuthenticated, userRole, user } = useAuthStore(); // Add the state variables
+  
+  const handleLogout = () => {
+    console.log('Before logout:', { isAuthenticated, userRole, user });
+    logout();
+    console.log('After logout:', useAuthStore.getState());
+    navigate('/');
+  };
+  
+  
+  
   const { updateOrderStatus } = useOrderStore();
   const orders = useOrderStore((state) => state.orders);
 
@@ -174,6 +191,13 @@ const StaffUIPage = () => {
               {currentTime.toLocaleTimeString()}
             </div>
             <div className="text-sm">{currentTime.toLocaleDateString()}</div>
+            <button 
+              onClick={handleLogout}
+              className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-lg text-sm"
+            >
+            <LogOut className="w-4 h-4" />
+              Logout
+            </button>                        
           </div>
         </div>
 

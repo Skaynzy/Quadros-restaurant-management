@@ -1,18 +1,30 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
+
 const useAuthStore = create(
   persist(
     (set) => ({
-      user: {
-        name: "Lhenard Kaiser",
-        email: "lhenardkaiser00@gmail.com",
-      },
-      isAuthenticated: true,
-      userRole: "user",
+      user: null,
+      isAuthenticated: false,
+      userRole: null,
 
-      login: (role) => set({ isAuthenticated: true, userRole: role }),
-      logout: () => set({ isAuthenticated: false, userRole: null }),
+      login: (role, userData = null) => set({ 
+        isAuthenticated: true, 
+        userRole: role,
+        user: userData || { 
+          name: role === 'admin' ? 'Admin User' : 
+                role === 'staff' ? 'Staff User' : 
+                role === 'rider' ? 'Rider User' : 'Regular User',
+          email: `${role}@quadros.com` 
+        }
+      }),
+      
+      logout: () => set({ 
+        isAuthenticated: false, 
+        userRole: null, 
+        user: null 
+      }),
     }),
     {
       name: "auth-store",

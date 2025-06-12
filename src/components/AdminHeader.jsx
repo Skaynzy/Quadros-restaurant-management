@@ -2,13 +2,24 @@ import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Menu, X, LayoutDashboard, Users, Package } from "lucide-react";
 import logo from "../assets/quadros_logo1.jpg";
+import useAuthStore from "../store/useAuthStore";
+
 
 const AdminHeader = () => {
+  
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
-  const menuItems = [
+  const { logout, isAuthenticated, userRole, user } = useAuthStore(); // Add the state variables
+  
+  const handleLogout = () => {
+    console.log('Before logout:', { isAuthenticated, userRole, user });
+    logout();
+    console.log('After logout:', useAuthStore.getState());
+    navigate('/');
+  };
+    const menuItems = [
     {
       path: "/dashboard",
       label: "Dashboard",
@@ -56,7 +67,9 @@ const AdminHeader = () => {
           </div>
 
           {/* Sign out btn */}
-          <button>Log-Out</button>
+          <button onClick={handleLogout} className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors">
+            Log-Out
+          </button>
           {/* Hamburger Menu Button */}
 
           <button

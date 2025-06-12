@@ -17,14 +17,13 @@ import AdminPanel from "./components/AdminPanel";
 import HomePage from "./components/HomePage";
 import ManageProductsPage from "./pages/ManageProductsPage";
 import RiderPage from "./pages/RiderPage";
+import ProtectedRoute from "./components/RouteProtect";
 
 const App = () => {
   return (
     <Router>
       <Routes>
-        
-        
-        {/* landing page */}
+        {/* Public routes - landing page */}
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
           <Route path="products" element={<ProductPage />} />
@@ -36,19 +35,59 @@ const App = () => {
           <Route path="purchase" element={<PurchasePage />} />
           <Route path="forgot-password" element={<ForgotPassword />} />  
         </Route>
-          {/* admin routes */}
-        <Route element= {<Layoutver2/>}>
-          <Route element= {<AdminPanel/>}>
-            <Route path="dashboard" element={<DashBoredPage />} />
-            <Route path="manage-accounts" element={<ManageAccountsPage />} />
-            <Route path="manage-products" element={<ManageProductsPage />} />
-          </Route>
-        {/* staff routes*/}
-          <Route path="staff/order-management" element={<StaffUIPage />} />
-          <Route path="rider/order-management" element={<RiderPage/>}/>
-        {/* login route*/}
+
+        {/* Auth routes */}
+        <Route path="login" element={<LoginPage />} />
         
-          <Route path="login" element={<LoginPage />} />
+        {/* Protected routes */}
+        <Route element={<Layoutver2/>}>
+          {/* Admin routes */}
+          <Route element={<AdminPanel/>}>
+            <Route 
+              path="dashboard" 
+              element={
+                <ProtectedRoute allowedRoles={['admin']}>
+                  <DashBoredPage />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="manage-accounts" 
+              element={
+                <ProtectedRoute allowedRoles={['admin']}>
+                  <ManageAccountsPage />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="manage-products" 
+              element={
+                <ProtectedRoute allowedRoles={['admin']}>
+                  <ManageProductsPage />
+                </ProtectedRoute>
+              } 
+            />
+          </Route>
+
+          {/* Staff routes */}
+          <Route 
+            path="staff/order-management" 
+            element={
+              <ProtectedRoute allowedRoles={['staff']}>
+                <StaffUIPage />
+              </ProtectedRoute>
+            } 
+          />
+
+          {/* Rider routes */}
+          <Route 
+            path="rider/order-management" 
+            element={
+              <ProtectedRoute allowedRoles={['rider']}>
+                <RiderPage />
+              </ProtectedRoute>
+            }
+          />
         </Route>
       </Routes>
     </Router>
