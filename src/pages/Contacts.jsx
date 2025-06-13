@@ -3,8 +3,8 @@ import { MapPin, Mail, Phone } from "lucide-react";
 const Contacts = () => {
     return(
         <>
-        <section className="h-auto w-full justify-items-center -mt-30">
-            <div className="h-30 w-full"></div>
+        <section className="h-auto w-full justify-items-center mt-10">
+            <div className="h-auto w-full"></div>
             <div className="text-center mt-5 font-extrabold text-4xl md:text-6xl">CONTACTS</div>
             <div className="w-32 md:w-45 h-1 bg-green-600 mx-auto"></div>
             <div className="mt-5 h-0.5 bg-green-800 w-3/4"></div>

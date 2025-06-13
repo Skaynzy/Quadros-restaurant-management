@@ -52,16 +52,16 @@ const AdminHeader = () => {
 
   return (
     <>
-      <header className="bg-red-800 font-bold h-27.5 relative z-50">
+      <header className="bg-red-800 font-bold h-32.5 relative z-50">
         <div className="container mx-auto px-4 h-full flex items-center justify-between">
           {/* Logo and Title */}
           <div className="flex items-center gap-3">
             <img 
               src={logo} 
               alt="logo" 
-              className="w-25 h-25 rounded-full border-2 "
+              className="w-30 h-30 rounded-full border-2 "
             />
-            <span className="text-white text-lg font-bold ">
+            <span className="text-white text-2xl font-bold ">
               Admin Panel
             </span>
           </div>

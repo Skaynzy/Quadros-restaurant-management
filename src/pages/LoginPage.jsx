@@ -39,10 +39,10 @@ const LoginPage = () => {
     try {
       // Define user credentials with roles
       const users = {
-        'admin@quadros.com': { password: 'admin123', role: 'admin' },
-        'staff@quadros.com': { password: 'staff123', role: 'staff' },
-        'rider@quadros.com': { password: 'rider123', role: 'rider' },
-        'user@quadros.com': { password: 'user123', role: 'user' }
+        'admin@quadros.com': { password: 'adminquadros999', role: 'admin' },
+        'staff@quadros.com': { password: 'staffquadros111', role: 'staff' },
+        'rider@quadros.com': { password: 'riderquadros123', role: 'rider' },
+        'lhenard@quadros.com': { password: 'lhenardkai99', role: 'user' }
       };
 
       const user = users[formData.email];

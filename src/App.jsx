@@ -1,3 +1,4 @@
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ProductPage from "./pages/ProductPage";
 import Layout from "./components/Layout";
@@ -23,17 +24,80 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        {/* Public routes - landing page */}
+        {/* Public routes - landing page (accessible to unauthenticated users and customers, blocked for admin, staff, rider) */}
         <Route path="/" element={<Layout />}>
-          <Route index element={<HomePage />} />
-          <Route path="products" element={<ProductPage />} />
-          <Route path="about" element={<About/>}/>
-          <Route path="contacts" element={<Contacts/>}/>
-          <Route path="product-details" element={<ProductDetailsPage />} />
-          <Route path="cart" element={<CartPage />} />
-          <Route path="profile" element={<ProfilePage />} />
-          <Route path="purchase" element={<PurchasePage />} />
-          <Route path="forgot-password" element={<ForgotPassword />} />  
+          <Route 
+            index 
+            element={
+              <ProtectedRoute blockRoles={['admin', 'staff', 'rider']} allowUnauthenticated={true}>
+                <HomePage />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="products" 
+            element={
+              <ProtectedRoute blockRoles={['admin', 'staff', 'rider']} allowUnauthenticated={true}>
+                <ProductPage />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="about" 
+            element={
+              <ProtectedRoute blockRoles={['admin', 'staff', 'rider']} allowUnauthenticated={true}>
+                <About />
+              </ProtectedRoute>
+            }
+          />
+          <Route 
+            path="contacts" 
+            element={
+              <ProtectedRoute blockRoles={['admin', 'staff', 'rider']} allowUnauthenticated={true}>
+                <Contacts />
+              </ProtectedRoute>
+            }
+          />
+          <Route 
+            path="product-details" 
+            element={
+              <ProtectedRoute blockRoles={['admin', 'staff', 'rider']} allowUnauthenticated={true}>
+                <ProductDetailsPage />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="cart" 
+            element={
+              <ProtectedRoute blockRoles={['admin', 'staff', 'rider']} allowUnauthenticated={true}>
+                <CartPage />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="profile" 
+            element={
+              <ProtectedRoute blockRoles={['admin', 'staff', 'rider']}>
+                <ProfilePage />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="purchase" 
+            element={
+              <ProtectedRoute blockRoles={['admin', 'staff', 'rider']} allowUnauthenticated={true}>
+                <PurchasePage />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="forgot-password" 
+            element={
+              <ProtectedRoute blockRoles={['admin', 'staff', 'rider']} allowUnauthenticated={true}>
+                <ForgotPassword />
+              </ProtectedRoute>
+            } 
+          />  
         </Route>
 
         {/* Auth routes */}

@@ -15,7 +15,7 @@ const useAuthStore = create(
         user: userData || { 
           name: role === 'admin' ? 'Admin User' : 
                 role === 'staff' ? 'Staff User' : 
-                role === 'rider' ? 'Rider User' : 'Regular User',
+                role === 'rider' ? 'Rider User' : 'Lhenard Kaiser Villaruz',
           email: `${role}@quadros.com` 
         }
       }),

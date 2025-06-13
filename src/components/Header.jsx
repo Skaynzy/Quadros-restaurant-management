@@ -5,19 +5,18 @@ import { useState } from "react";
 
 import logo from "../assets/quadros_logo1.jpg";
 
-import { Search, ShoppingCart, User2, Menu, X } from "lucide-react";
+import { ShoppingCart, User2, Menu, X } from "lucide-react";
 
 const OrderHeader = () => {
   const cart = useCartStore((state) => state.cart);
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
-  const userRole = useAuthStore((state) => state.userRole);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navigate = useNavigate();
 
   return (
     <>
-      <header className="fixed top-0 left-0 z-50 w-full h-20 lg:h-30 border-b-4 border-green-900 bg-green-950">
+      <header className="fixed top-0 left-0 z-50 w-full h-20 lg:h-35 border-b-4 border-green-900 bg-green-950">
         <div className="container flex items-center justify-between h-full px-2 lg:px-4 py-2 mx-auto">
           {/* Left section - Logo */}
           <div
@@ -25,17 +24,17 @@ const OrderHeader = () => {
             className="flex justify-center items-center space-x-2 px-2 py-2 hover:cursor-pointer duration-200 hover:bg-green-600 rounded"
           >
             <img
-              className="rounded-full w-12 h-12 lg:w-20 lg:h-20 xl:w-25 xl:h-25"
+              className="rounded-full w-12 h-12 lg:w-20 lg:h-20 xl:w-30 xl:h-30"
               src={logo}
               alt="Logo"
             />
-            <p className="text-base sm:text-lg lg:text-xl xl:text-2xl font-bold text-white whitespace-nowrap">
+            <p className="text-base sm:text-lg lg:text-xl xl:text-4xl font-bold text-white whitespace-nowrap">
               QUADROS PIZZA
             </p>
           </div>
 
           {/* Desktop Navigation - Hidden on mobile */}
-          <div className="hidden lg:flex items-center p-2 h-full font-bold text-sm lg:text-base xl:text-lg">
+          <div className="hidden lg:flex items-center p-2 h-full font-bold text-sm lg:text-base xl:text-2xl">
             <div 
               className="px-4 lg:px-6 xl:px-8 h-full content-center cursor-pointer duration-200 hover:bg-green-600 text-white rounded"
               onClick={() => navigate("products")}
@@ -60,61 +59,19 @@ const OrderHeader = () => {
           <div className="flex items-center text-red-900">
             {/* Desktop Actions */}
             <div className="hidden sm:flex items-center bg-white rounded-full">
-              {isAuthenticated && userRole === "admin" ? (
-                <div className="flex items-center p-3 lg:p-4 xl:p-5">
-                  <ul className="flex space-x-3 lg:space-x-4 xl:space-x-6">
-                    <li
-                      onClick={() => navigate("manage-accounts")}
-                      className="px-3 py-1.5 lg:px-4 lg:py-2 xl:px-6 xl:py-3 text-white text-xs lg:text-sm xl:text-base font-semibold transition duration-200 bg-green-950 rounded-2xl hover:cursor-pointer hover:bg-green-800 whitespace-nowrap"
-                      style={{
-                        padding: '0.375rem 0.75rem',
-                        fontSize: '0.75rem',
-                        '@media (min-width: 1024px)': {
-                          padding: '0.5rem 1rem',
-                          fontSize: '0.875rem'
-                        },
-                        '@media (min-width: 1280px)': {
-                          padding: '0.75rem 1.5rem',
-                          fontSize: '1rem'
-                        }
-                      }}
-                    >
-                      Accounts
-                    </li>
-                    <li
-                      onClick={() => navigate("dashboard")}
-                      className="px-3 py-1.5 lg:px-4 lg:py-2 xl:px-6 xl:py-3 text-white text-xs lg:text-sm xl:text-base font-semibold transition duration-200 bg-green-950 rounded-2xl hover:cursor-pointer hover:bg-green-800 whitespace-nowrap"
-                      style={{
-                        padding: '0.375rem 0.75rem',
-                        fontSize: '0.75rem',
-                        '@media (min-width: 1024px)': {
-                          padding: '0.5rem 1rem',
-                          fontSize: '0.875rem'
-                        },
-                        '@media (min-width: 1280px)': {
-                          padding: '0.75rem 1.5rem',
-                          fontSize: '1rem'
-                        }
-                      }}
-                    >
-                      Dashboard
-                    </li>
-                  </ul>
+              <div className="flex items-center p-3 lg:p-4 xl:p-5 space-x-3">
+                <div
+                  onClick={() => navigate("cart")}
+                  className="relative hover:cursor-pointer"
+                >
+                  <ShoppingCart size={24} className="lg:w-8 lg:h-8 xl:w-8 xl:h-8" />
+                  <span className="absolute px-1.5 lg:px-2 font-bold text-white bg-red-400 rounded-full -top-2 lg:-top-3 -right-2 lg:-right-3 text-xs lg:text-sm">
+                    {cart.length}
+                  </span>
                 </div>
-              ) : (
-                <div className="flex items-center p-3 lg:p-4 xl:p-5 space-x-3">
-                  <div
-                    onClick={() => navigate("cart")}
-                    className="relative hover:cursor-pointer"
-                  >
-                    <ShoppingCart size={24} className="lg:w-8 lg:h-8 xl:w-8 xl:h-8" />
-                    <span className="absolute px-1.5 lg:px-2 font-bold text-white bg-red-400 rounded-full -top-2 lg:-top-3 -right-2 lg:-right-3 text-xs lg:text-sm">
-                      {cart.length}
-                    </span>
-                  </div>
-                </div>
-              )}
-              {isAuthenticated && userRole !== null ? (
+              </div>
+              
+              {isAuthenticated ? (
                 <User2
                   className="hover:cursor-pointer text-green-950 w-6 h-6 lg:w-8 lg:h-8 xl:w-8 xl:h-8 mx-3 mr-5"
                   onClick={() => navigate("profile")}
@@ -141,17 +98,15 @@ const OrderHeader = () => {
 
             {/* Mobile Actions - Visible on small screens */}
             <div className="flex sm:hidden items-center space-x-2 ml-2">
-              {!(isAuthenticated && userRole === "admin") && (
-                <div
-                  onClick={() => navigate("cart")}
-                  className="relative hover:cursor-pointer p-2 bg-white rounded-full"
-                >
-                  <ShoppingCart size={20} className="text-red-900" />
-                  <span className="absolute px-1 font-bold text-white bg-red-400 rounded-full -top-1 -right-1 text-xs min-w-5 h-5 flex items-center justify-center">
-                    {cart.length}
-                  </span>
-                </div>
-              )}
+              <div
+                onClick={() => navigate("cart")}
+                className="relative hover:cursor-pointer p-2 bg-white rounded-full"
+              >
+                <ShoppingCart size={20} className="text-red-900" />
+                <span className="absolute px-1 font-bold text-white bg-red-400 rounded-full -top-1 -right-1 text-xs min-w-5 h-5 flex items-center justify-center">
+                  {cart.length}
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -182,37 +137,20 @@ const OrderHeader = () => {
               
               {/* Mobile Actions */}
               <div className="border-t border-green-800 pt-4 space-y-3">
-                {isAuthenticated && userRole === "admin" ? (
-                  <>
-                    <div
-                      onClick={() => {navigate("manage-accounts"); setMobileMenuOpen(false);}}
-                      className="text-white font-bold py-3 px-4 bg-green-800 rounded-lg hover:bg-green-700 cursor-pointer"
-                    >
-                      Accounts
-                    </div>
-                    <div
-                      onClick={() => {navigate("dashboard"); setMobileMenuOpen(false);}}
-                      className="text-white font-bold py-3 px-4 bg-green-800 rounded-lg hover:bg-green-700 cursor-pointer"
-                    >
-                      Dashboard
-                    </div>
-                  </>
-                ) : (
-                  <div
-                    onClick={() => {navigate("cart"); setMobileMenuOpen(false);}}
-                    className="flex items-center justify-between text-white font-bold py-3 px-4 bg-green-800 rounded-lg hover:bg-green-700 cursor-pointer"
-                  >
-                    <span>Cart</span>
-                    <div className="flex items-center space-x-2">
-                      <ShoppingCart size={20} />
-                      <span className="px-2 py-1 bg-red-400 rounded-full text-sm">
-                        {cart.length}
-                      </span>
-                    </div>
+                <div
+                  onClick={() => {navigate("cart"); setMobileMenuOpen(false);}}
+                  className="flex items-center justify-between text-white font-bold py-3 px-4 bg-green-800 rounded-lg hover:bg-green-700 cursor-pointer"
+                >
+                  <span>Cart</span>
+                  <div className="flex items-center space-x-2">
+                    <ShoppingCart size={20} />
+                    <span className="px-2 py-1 bg-red-400 rounded-full text-sm">
+                      {cart.length}
+                    </span>
                   </div>
-                )}
+                </div>
                 
-                {isAuthenticated && userRole !== null ? (
+                {isAuthenticated ? (
                   <div
                     onClick={() => {navigate("profile"); setMobileMenuOpen(false);}}
                     className="flex items-center space-x-2 text-white font-bold py-3 px-4 bg-green-800 rounded-lg hover:bg-green-700 cursor-pointer"

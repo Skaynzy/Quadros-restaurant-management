@@ -27,8 +27,6 @@ const ProfilePage = () => {
       </div>
       <div>
         <p>User: {user?.name}</p>
-        <p>Role: {userRole}</p>
-        <p>Authenticated: {isAuthenticated ? 'Yes' : 'No'}</p>
       </div>
     </main>
   );
